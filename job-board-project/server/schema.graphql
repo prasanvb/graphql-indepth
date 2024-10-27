@@ -1,5 +1,4 @@
 type Query {
-  greetings: String
   # Array elements are not nullable but can be an empty array
   job: [Job!]
 }
@@ -7,5 +6,8 @@ type Query {
 type Job {
   id: ID!,
   title: String!,
+  # Below is a custom comment that will be added to graphql documentation
+  """ Date in ISO formate """
+  date: String!,
   description: String,
 }

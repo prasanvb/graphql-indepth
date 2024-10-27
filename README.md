@@ -30,4 +30,6 @@
 
 - [Graphql request using Fetch API](basics/client/index.html)
 
+- `ID` scalar type represents a unique identifier key for a cache. The ID type is serialized in the same way as a String; however, defining it as an ID signifies that it is not intended to be human‐readable.
+
 - Non nullable/required type representation in schema using exclamation `!` (example: `ID!`)
