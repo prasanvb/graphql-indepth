@@ -7,11 +7,32 @@ import { getJobById } from "../lib/graphql/queries";
 function JobPage() {
   // NOTE: getting jobID from url query parameter
   const { jobId } = useParams();
-  const [job, setJob] = useState();
+  const [componentState, setComponentState] = useState({
+    isLoading: true,
+    job: null,
+    isError: false,
+  });
+  const { isLoading, job, isError } = componentState;
 
   useEffect(() => {
-    getJobById(jobId).then((job) => setJob(job));
+    (async () => {
+      try {
+        const job = await getJobById(jobId);
+        setComponentState({ job, isLoading: false, isError: false });
+      } catch (err) {
+        console.error("error: ", JSON.stringify(err, null, 2));
+        setComponentState({ job: null, isLoading: false, isError: true });
+      }
+    })();
   }, [jobId]);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (isError) {
+    return <p>Error on trying to fetch company data, try again later</p>;
+  }
 
   return (
     job && (

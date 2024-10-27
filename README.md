@@ -16,7 +16,7 @@
 
   - Query
   - Mutation
-  - Fragment
+  - Fragment - Fragments allow you to define reusable parts of a query, making it easier to structure complex queries and avoid repetition.
   - Subscription
   - {}
 
@@ -37,3 +37,41 @@
 - `""" ISO date formate """` triple quotes in graphql schema are custom comments that will be added to graphql documentation
 
 - GraphQL allows for recursive queries, enabling you to fetch data with arbitrary levels of nesting. This is particularly useful for hierarchical data, such as company-job relationships.
+
+  ```graphql
+  query nestedQueries {
+    fetchCompany(id: "FjcJCHJALA4i") {
+      id
+      name
+      jobs {
+        id
+        title
+        company {
+          id
+          name
+          jobs {
+            id
+            title
+          }
+        }
+      }
+    }
+  }
+  ```
+
+- GraphQL supports efficient data fetching by allowing you to combine multiple queries into a single request. To avoid errors, it's crucial to make individual queries as nullable fields, if not whole response will throw an error.
+
+  ```graphql
+  query mutliVarRequest {
+    fetchCompany(id: "FjcJCHJALA4i") {
+      id
+      name
+    }
+    fetchJob(id: "6mA05AZxvS1R") {
+      id
+      title
+    }
+  }
+  ```
+
+- [Graphql error handling and custom errors](job-board-project/server/resolver.js)
