@@ -1,15 +1,23 @@
-import { getJobs } from './db/jobs.js';
+import { getJobs, getJob } from './db/jobs.js';
+import { getCompany } from './db/companies.js';
 import { toISOdate } from './utils/utils.js';
 
 export const resolvers = {
   Query: {
     // NOTE: job has 2 layer resolver functions 1.getJobs() and 2.Job
-    job: () => getJobs(),
+    // Data returned by getJobs() is used as input inside Job function
+    jobs: () => getJobs(),
+    // NOTE: args is object with query parameter value
+    job: (_root, args) => {
+      console.log(args.id);
+      return getJob(args.id);
+    },
   },
 
   // Custom resolver for job
   Job: {
-    // field value inside the custom resolver takes precedence over getJobs field value
+    // field value inside the custom resolver takes precedence over getJobs field values
     date: (job) => toISOdate(job.createdAt),
+    company: (job) => getCompany(job.companyId),
   },
 };

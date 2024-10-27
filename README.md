@@ -33,3 +33,5 @@
 - `ID` scalar type represents a unique identifier key for a cache. The ID type is serialized in the same way as a String; however, defining it as an ID signifies that it is not intended to be human‐readable.
 
 - Non nullable/required type representation in schema using exclamation `!` (example: `ID!`)
+
+- `""" ISO date formate """` triple quotes in graphql schema are custom comments that will be added to graphql documentation
