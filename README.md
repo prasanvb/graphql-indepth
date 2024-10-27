@@ -35,3 +35,5 @@
 - Non nullable/required type representation in schema using exclamation `!` (example: `ID!`)
 
 - `""" ISO date formate """` triple quotes in graphql schema are custom comments that will be added to graphql documentation
+
+- GraphQL allows for recursive queries, enabling you to fetch data with arbitrary levels of nesting. This is particularly useful for hierarchical data, such as company-job relationships.
