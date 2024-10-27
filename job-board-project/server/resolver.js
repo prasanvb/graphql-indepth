@@ -8,10 +8,8 @@ export const resolvers = {
     // Data returned by getJobs() is used as input inside Job function
     jobs: () => getJobs(),
     // NOTE: args is object with query parameter value
-    job: (_root, args) => {
-      console.log(args.id);
-      return getJob(args.id);
-    },
+    job: (_root, args) => getJob(args.id),
+    company: (_root, args) => getCompany(args.id),
   },
 
   // Custom resolver for job
@@ -19,5 +17,8 @@ export const resolvers = {
     // field value inside the custom resolver takes precedence over getJobs field values
     date: (job) => toISOdate(job.createdAt),
     company: (job) => getCompany(job.companyId),
+  },
+  Company: {
+    jobs: () => [],
   },
 };

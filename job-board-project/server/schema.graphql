@@ -2,6 +2,7 @@ type Query {
   # Array elements are not nullable but can be an empty array
   jobs: [Job!]
   job(id: ID): Job
+  company(id: ID): Company
 }
 
 type Job {
@@ -19,4 +20,5 @@ type Company {
   id: ID!,
   name: String,
   description: String
+  jobs: [Job!]
 }
