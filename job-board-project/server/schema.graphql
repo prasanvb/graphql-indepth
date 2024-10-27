@@ -1,3 +1,11 @@
 type Query {
-  greeting: String
+  greetings: String
+  # Array elements are not nullable but can be an empty array
+  job: [Job!]
+}
+
+type Job {
+  id: ID!,
+  title: String!,
+  description: String,
 }
