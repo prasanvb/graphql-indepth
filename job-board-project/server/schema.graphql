@@ -1,8 +1,8 @@
 type Query {
   # Array elements are not nullable but can be an empty array
-  jobs: [Job!]
-  job(id: ID): Job
-  company(id: ID): Company
+  fetchJobs: [Job!]
+  fetchJob(id: ID): Job
+  fetchCompany(id: ID): Company
 }
 
 type Job {

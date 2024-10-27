@@ -6,10 +6,10 @@ export const resolvers = {
   Query: {
     // NOTE: job has 2 layer resolver functions 1.getJobs() and 2.Job
     // Data returned by getJobs() is used as input inside Job function
-    jobs: () => getJobs(),
+    fetchJobs: () => getJobs(),
     // NOTE: args is object with query parameter value
-    job: (_root, args) => getJob(args.id),
-    company: (_root, args) => getCompany(args.id),
+    fetchJob: (_root, args) => getJob(args.id),
+    fetchCompany: (_root, args) => getCompany(args.id),
   },
 
   // Custom resolver for job

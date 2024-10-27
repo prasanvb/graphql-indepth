@@ -7,7 +7,7 @@ const client = new GraphQLClient(endpoint);
 export const getJobs = async () => {
   const query = gql`
     query Jobs {
-      jobs {
+      fetchJobs {
         id
         title
         description
@@ -21,14 +21,14 @@ export const getJobs = async () => {
     }
   `;
 
-  const { jobs } = await client.request(query);
-  return jobs;
+  const res = await client.request(query);
+  return res.fetchJobs;
 };
 
 export const getJobById = async (jobId) => {
   const query = gql`
     query jobById($jobId: ID!) {
-      job(id: $jobId) {
+      fetchJob(id: $jobId) {
         id
         title
         date
@@ -41,14 +41,14 @@ export const getJobById = async (jobId) => {
     }
   `;
 
-  const { job } = await client.request(query, { jobId });
-  return job;
+  const res = await client.request(query, { jobId });
+  return res.fetchJob;
 };
 
 export const getCompanyById = async (companyId) => {
   const query = gql`
     query companyById($companyId: ID!) {
-      company(id: $companyId) {
+      fetchCompany(id: $companyId) {
         id
         name
         description
@@ -56,6 +56,6 @@ export const getCompanyById = async (companyId) => {
     }
   `;
 
-  const { company } = await client.request(query, { companyId });
-  return company;
+  const res = await client.request(query, { companyId });
+  return res.fetchCompany;
 };
