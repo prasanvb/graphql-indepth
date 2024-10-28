@@ -75,3 +75,5 @@
   ```
 
 - [Graphql error handling and custom errors](job-board-project/server/resolver.js)
+
+- Graphql input types are used to define the structure of data that can be passed as arguments to fields, particularly in mutations.

@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "nodemon server.js",
-    "lint": "eslint --fix ./*.js"
+    "lint": "eslint --fix ./*.js",
+    "initial-seed": "node scripts/create-db.js"
   },
   "dependencies": {
     "@apollo/server": "^4.11.0",

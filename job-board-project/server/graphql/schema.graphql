@@ -1,9 +1,21 @@
 type Query {
   # Array elements are not nullable but can be an empty array
   # NOTE: all top level query objects are always nullable (best practice)
+  # QueryName: return type
   fetchJobs: [Job!]
   fetchJob(id: ID): Job!
   fetchCompany(id: ID): Company
+}
+
+type Mutation {
+  # MutationName: return type
+  createJob(jobInput: CreateJobInput!): Job
+}
+
+# NOTE: special graphql type called input
+input CreateJobInput {
+  title: String!
+  description: String,
 }
 
 type Job {

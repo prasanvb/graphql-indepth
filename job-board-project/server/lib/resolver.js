@@ -1,13 +1,10 @@
-import { getJobs, getJob, getJobsByCompany } from './db/jobs.js';
-import { getCompany } from './db/companies.js';
-import { toISOdate } from './utils/utils.js';
-import { GraphQLError } from 'graphql';
-
-const notFoundError = (message) => {
-  return new GraphQLError(message, {
-    extensions: { code: 'NOT_FOUND' },
-  });
-};
+import { getJobs, getJob, getJobsByCompany, createJob } from '../db/jobs.js';
+import { getCompany } from '../db/companies.js';
+import {
+  toISOdate,
+  notFoundError,
+  internalServerError,
+} from '../utils/utils.js';
 
 export const resolvers = {
   Query: {
@@ -41,7 +38,27 @@ export const resolvers = {
     date: (getJobsResponse) => toISOdate(getJobsResponse.createdAt),
     company: (getJobsResponse) => getCompany(getJobsResponse.companyId),
   },
+
+  // Custom resolver for company
   Company: {
     jobs: (getCompany) => getJobsByCompany(getCompany.id),
+  },
+
+  // Mutation
+  Mutation: {
+    createJob: async (_root, args) => {
+      const {
+        jobInput: { title, description },
+      } = args;
+      const companyId = 'Gu7QW9LcnF5d';
+      // NOTE: createJob function requires object as an input parameter
+      const newJob = await createJob({ companyId, title, description });
+
+      if (!newJob) {
+        throw internalServerError('Unable to create new job, try again later');
+      }
+
+      return newJob;
+    },
   },
 };
