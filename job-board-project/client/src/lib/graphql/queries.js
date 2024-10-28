@@ -84,3 +84,18 @@ export const createJob = async ({ title, description }) => {
   });
   return res;
 };
+
+export const deleteJobById = async (jobId) => {
+  const mutation = gql`
+    mutation deleteJon($jobId: ID!) {
+      deleteJobById(id: $jobId) {
+        id
+        title
+        description
+      }
+    }
+  `;
+
+  const res = await client.request(mutation, { jobId });
+  return res.deleteJobById;
+};

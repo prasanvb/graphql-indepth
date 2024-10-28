@@ -10,6 +10,7 @@ type Query {
 type Mutation {
   # MutationName: return type
   createJob(jobInput: CreateJobInput!): Job
+  deleteJobById(id: ID!): Job 
 }
 
 # NOTE: special graphql type called input

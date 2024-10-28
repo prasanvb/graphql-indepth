@@ -1,4 +1,10 @@
-import { getJobs, getJob, getJobsByCompany, createJob } from '../utils/jobs.js';
+import {
+  getJobs,
+  getJob,
+  getJobsByCompany,
+  createJob,
+  deleteJob,
+} from '../utils/jobs.js';
 import { getCompany } from '../utils/companies.js';
 import {
   toISOdate,
@@ -59,6 +65,15 @@ export const resolvers = {
       }
 
       return newJob;
+    },
+    deleteJobById: async (_root, args) => {
+      const job = await deleteJob(args.id);
+
+      if (!job) {
+        throw notFoundError(`Job not found with id: ${args.id}`);
+      }
+
+      return job;
     },
   },
 };

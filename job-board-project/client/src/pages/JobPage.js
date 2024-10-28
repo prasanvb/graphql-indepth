@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { formatDate } from "../lib/formatters";
-import { getJobById } from "../lib/graphql/queries";
+import { getJobById, deleteJobById } from "../lib/graphql/queries";
+import { useNavigate } from "react-router";
 
 function JobPage() {
+  const navigate = useNavigate();
   // NOTE: getting jobID from url query parameter
   const { jobId } = useParams();
   const [componentState, setComponentState] = useState({
@@ -34,6 +36,12 @@ function JobPage() {
     return <p>Error on trying to fetch company data, try again later</p>;
   }
 
+  const handleDelete = async (event) => {
+    event.preventDefault();
+    const res = await deleteJobById(job.id);
+    res && navigate("/");
+  };
+
   return (
     job && (
       <div>
@@ -44,6 +52,13 @@ function JobPage() {
         <div className="box">
           <div className="block has-text-grey">Posted: {formatDate(job.date, "long")}</div>
           <p className="block">{job.description}</p>
+        </div>
+        <div className="field">
+          <div className="control">
+            <button className="button is-link" onClick={handleDelete}>
+              Delete this Job posting
+            </button>
+          </div>
         </div>
       </div>
     )
