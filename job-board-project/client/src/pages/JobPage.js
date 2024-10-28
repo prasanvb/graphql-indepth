@@ -42,6 +42,12 @@ function JobPage() {
     res && navigate("/");
   };
 
+  const handleEdit = async (event) => {
+    event.preventDefault();
+    const { id, title, description } = job;
+    navigate("/jobs/new", { state: { id, title, description, updateAction: true } });
+  };
+
   return (
     job && (
       <div>
@@ -54,9 +60,16 @@ function JobPage() {
           <p className="block">{job.description}</p>
         </div>
         <div className="field">
+          <div className="warning">
+            <button className="button is-link" onClick={handleEdit}>
+              Edit
+            </button>
+          </div>
+        </div>
+        <div className="field">
           <div className="control">
             <button className="button is-link" onClick={handleDelete}>
-              Delete this Job posting
+              Delete
             </button>
           </div>
         </div>
