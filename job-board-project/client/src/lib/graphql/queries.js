@@ -64,3 +64,23 @@ export const getCompanyById = async (companyId) => {
   const res = await client.request(query, { companyId });
   return res.fetchCompany;
 };
+
+export const createJob = async ({ title, description }) => {
+  const mutation = gql`
+    mutation createNewJob($jobInput: CreateJobInput!) {
+      createJob(jobInput: $jobInput) {
+        id
+        title
+        description
+      }
+    }
+  `;
+
+  const res = await client.request(mutation, {
+    jobInput: {
+      title,
+      description,
+    },
+  });
+  return res;
+};
