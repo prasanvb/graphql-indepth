@@ -62,7 +62,7 @@
 - GraphQL supports efficient data fetching by allowing you to combine multiple queries into a single request. To avoid errors, it's crucial to make individual queries as nullable fields, if not whole response will throw an error.
 
   ```graphql
-  query mutliVarRequest {
+  query multiVarRequest {
     fetchCompany(id: "FjcJCHJALA4i") {
       id
       name
@@ -77,25 +77,3 @@
 - [Graphql error handling and custom errors](job-board-project/server/resolver.js)
 
 - Graphql input types are used to define the structure of data that can be passed as arguments to fields, particularly in mutations.
-
-- update jobs inputs
-
-```graphql
-mutation updateJob($input: UpdateJobInput!) {
-  updateJobById(input: $input) {
-    id
-    title
-    description
-  }
-}
-```
-
-```json
-{
-  "input": {
-    "id": "gH8RnM9rjBA1",
-    "title": "new",
-    "description": "new"
-  }
-}
-```
