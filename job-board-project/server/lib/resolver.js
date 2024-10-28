@@ -1,5 +1,5 @@
-import { getJobs, getJob, getJobsByCompany, createJob } from '../db/jobs.js';
-import { getCompany } from '../db/companies.js';
+import { getJobs, getJob, getJobsByCompany, createJob } from '../utils/jobs.js';
+import { getCompany } from '../utils/companies.js';
 import {
   toISOdate,
   notFoundError,

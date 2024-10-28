@@ -1,4 +1,4 @@
-import { connection } from '../db/connection.js';
+import { connection } from '../utils/connection.js';
 import { users } from '../mocks/users.js';
 import { jobs } from '../mocks/jobs.js';
 import { companies } from '../mocks/companies.js';
