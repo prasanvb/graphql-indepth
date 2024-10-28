@@ -11,10 +11,17 @@ type Mutation {
   # MutationName: return type
   createJob(jobInput: CreateJobInput!): Job
   deleteJobById(id: ID!): Job 
+  updateJobById(input: UpdateJobInput!): Job
 }
 
 # NOTE: special graphql type called input
 input CreateJobInput {
+  title: String!
+  description: String,
+}
+
+input UpdateJobInput {
+  id: ID!
   title: String!
   description: String,
 }

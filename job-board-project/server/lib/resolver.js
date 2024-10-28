@@ -4,6 +4,7 @@ import {
   getJobsByCompany,
   createJob,
   deleteJob,
+  updateJob,
 } from '../utils/jobs.js';
 import { getCompany } from '../utils/companies.js';
 import {
@@ -74,6 +75,19 @@ export const resolvers = {
       }
 
       return job;
+    },
+    updateJobById: async (_root, args) => {
+      const {
+        input: { id, title, description },
+      } = args;
+
+      const updatedJob = await updateJob({ id, title, description });
+
+      if (!updatedJob) {
+        throw internalServerError('Unable to create new job, try again later');
+      }
+
+      return updatedJob;
     },
   },
 };
