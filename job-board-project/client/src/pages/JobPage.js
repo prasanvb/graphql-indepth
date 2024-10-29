@@ -38,8 +38,12 @@ function JobPage() {
 
   const handleDelete = async (event) => {
     event.preventDefault();
-    const res = await deleteJobById(job.id);
-    res && navigate("/");
+    try {
+      const res = await deleteJobById(job.id);
+      res && navigate("/");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleEdit = async (event) => {

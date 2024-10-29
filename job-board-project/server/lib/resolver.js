@@ -77,21 +77,38 @@ export const resolvers = {
 
       return newJob;
     },
-    deleteJobById: async (_root, args) => {
-      const job = await deleteJob(args.id);
+    deleteJobById: async (_root, args, context) => {
+      const jobId = args.id;
+      const { auth } = context;
+
+      if (!auth) {
+        throw unauthorizedError('User not authorized');
+      }
+
+      const user = await getUser(auth.sub);
+      const companyId = user.companyId;
+      const job = await deleteJob(jobId, companyId);
 
       if (!job) {
-        throw notFoundError(`Job not found with id: ${args.id}`);
+        throw notFoundError(`Job not found with id: ${jobId}`);
       }
 
       return job;
     },
-    updateJobById: async (_root, args) => {
+    updateJobById: async (_root, args, context) => {
+      const { auth } = context;
+
+      if (!auth) {
+        throw unauthorizedError('User not authorized');
+      }
+
       const {
         input: { id, title, description },
       } = args;
+      const user = await getUser(auth.sub);
+      const companyId = user.companyId;
 
-      const updatedJob = await updateJob({ id, title, description });
+      const updatedJob = await updateJob({ id, title, description, companyId });
 
       if (!updatedJob) {
         throw internalServerError('Unable to create new job, try again later');

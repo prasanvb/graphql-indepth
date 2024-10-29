@@ -9,21 +9,31 @@ function CreateJobPage() {
   const [description, setDescription] = useState("");
 
   useEffect(() => {
-    setTitle(state.title);
-    setDescription(state.description);
+    if (state) {
+      setTitle(state?.title);
+      setDescription(state?.description);
+    }
   }, [state]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (state.updateAction) {
+    if (state?.updateAction) {
       const { id } = state;
-      const res = await updateJobById({ id, title, description });
-      res && navigate(`/jobs/${id}`);
+      try {
+        const res = await updateJobById({ id, title, description });
+        res && navigate(`/jobs/${id}`);
+      } catch (e) {
+        console.log(e);
+      }
     } else {
-      const {
-        createJob: { id },
-      } = await createJob({ title, description });
-      id && navigate(`/jobs/${id}`);
+      try {
+        const {
+          createJob: { id },
+        } = await createJob({ title, description });
+        id && navigate(`/jobs/${id}`);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
 
