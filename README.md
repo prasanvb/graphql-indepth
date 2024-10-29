@@ -10,6 +10,11 @@
 - [Authentication flow diagram](job-board-project/client/public/authentication.png)
 - Bearer token is storied in the browser side local storage
 - `express-jwt` module provides Express middleware for validating JWTs and the decoded JWT payload is available on the `request` object. The decoded JWT payload is available on the request via the `auth` property.
+- Why there's a separate `/login` endpoint for authentication.
+  - Protocol Independence: GraphQL can be used with various protocols (HTTP, WebSockets, etc.), and authentication should be handled at the protocol level to maintain flexibility.
+  - Simplicity: Keeping authentication separate from GraphQL operations simplifies the API and avoids the need to include the token in every request.
+  - Best Practices: Well-known GraphQL APIs like GitHub and Shopify follow this approach, demonstrating its effectiveness.
+  - By separating authentication, the GraphQL API remains focused on data querying and mutation, while the underlying protocol handles the secure exchange of information.
 
 ## Graphql
 
