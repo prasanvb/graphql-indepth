@@ -5,6 +5,12 @@
 - Apollo Server is an open-source, spec-compliant GraphQL server that's compatible with any GraphQL client, including Apollo Client.
 - [Apollo Server Example](basics/server/server.js)
 
+## JWT Authentication
+
+- [Authentication flow diagram](job-board-project/client/public/authentication.png)
+- Bearer token is storied in the browser side local storage
+- `express-jwt` module provides Express middleware for validating JWTs and the decoded JWT payload is available on the `request` object. The decoded JWT payload is available on the request via the `auth` property.
+
 ## Graphql
 
 - Approaches
@@ -35,6 +41,13 @@
 - Non nullable/required type representation in schema using exclamation `!` (example: `ID!`)
 
 - `""" ISO date formate """` triple quotes in graphql schema are custom comments that will be added to graphql documentation
+
+- [Graphql resolver](job-board-project/server/lib/resolver.js) can optionally accept four positional arguments
+
+  - `root/parent` - The return value of the resolver for this field's parent (i.e., the previous resolver in the resolver chain). For resolvers of top-level fields with no parent (such as fields of Query), this value is obtained from the rootValue function passed to Apollo Server's constructor.
+  - `args` - Argument is an object that contains all inputs args that were provided for the field by the GraphQL operation
+  - `contextValue` - An object shared across all resolvers that are executing for a particular operation. Use this to share per-operation state, including authentication information, dataloader instances, and anything else to track across resolvers.
+  - `info` - Contains information about the operation's execution state, including the field name, the path to the field from the root, and more.
 
 - GraphQL allows for recursive queries, enabling you to fetch data with arbitrary levels of nesting. This is particularly useful for hierarchical data, such as company-job relationships.
 

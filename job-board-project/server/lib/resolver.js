@@ -11,6 +11,7 @@ import {
   toISOdate,
   notFoundError,
   internalServerError,
+  unauthorizedError,
 } from '../utils/utils.js';
 
 export const resolvers = {
@@ -53,11 +54,17 @@ export const resolvers = {
 
   // Mutation
   Mutation: {
-    createJob: async (_root, args) => {
+    createJob: async (_root, args, context) => {
       const {
         jobInput: { title, description },
       } = args;
+      const { auth } = context;
+
+      if (!auth) {
+        throw unauthorizedError('User not authorized');
+      }
       const companyId = 'Gu7QW9LcnF5d';
+
       // NOTE: createJob function requires object as an input parameter
       const newJob = await createJob({ companyId, title, description });
 

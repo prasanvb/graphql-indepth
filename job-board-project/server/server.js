@@ -8,20 +8,32 @@ import { resolvers } from './lib/resolver.js';
 
 const PORT = 9000;
 
-const app = express();
-app.use(cors(), express.json(), authMiddleware);
+const createApp = async () => {
+  const app = express();
+  // NOTE: authMiddleware uses express-jwt for validation the JWTs
+  app.use(cors(), express.json(), authMiddleware);
 
-app.post('/login', handleLogin);
+  app.post('/login', handleLogin);
 
-(async () => {
+  // NOTE: The express-jwt decoded JWT payload is available on the request via the `auth` property.
+  const getContext = ({ req }) => {
+    return { auth: req.auth };
+  };
+
   const typeDefs = await readFile('./graphql/schema.graphql', 'utf-8');
   const apolloServer = new ApolloServer({ typeDefs, resolvers });
 
+  // NOTE: apolloExpressMiddleware accepts `context` as optional parameter and context has access to `req` and `res` object
   await apolloServer.start();
-  app.use('/graphql', apolloExpressMiddleware(apolloServer));
-})();
+  app.use(
+    '/graphql',
+    apolloExpressMiddleware(apolloServer, { context: getContext }),
+  );
 
-app.listen({ port: PORT }, () => {
-  console.log(`Server running on port ${PORT}`);
-  console.log(`GraphQL endpoint: http://localhost:${PORT}/graphql`);
-});
+  app.listen({ port: PORT }, () => {
+    console.log(`Server running on port ${PORT}`);
+    console.log(`GraphQL endpoint: http://localhost:${PORT}/graphql`);
+  });
+};
+
+createApp();

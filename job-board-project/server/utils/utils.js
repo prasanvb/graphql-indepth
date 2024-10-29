@@ -15,3 +15,9 @@ export const internalServerError = (message) => {
     extensions: { code: 'SERVER_ERROR' },
   });
 };
+
+export const unauthorizedError = (message) => {
+  return new GraphQLError(message, {
+    extensions: { code: 'UNAUTHORIZED' },
+  });
+};
