@@ -6,6 +6,7 @@ import {
   deleteJob,
   updateJob,
 } from '../utils/jobs.js';
+import { getUser } from '../utils/users.js';
 import { getCompany } from '../utils/companies.js';
 import {
   toISOdate,
@@ -63,7 +64,9 @@ export const resolvers = {
       if (!auth) {
         throw unauthorizedError('User not authorized');
       }
-      const companyId = 'Gu7QW9LcnF5d';
+
+      const user = await getUser(auth.sub);
+      const companyId = user.companyId;
 
       // NOTE: createJob function requires object as an input parameter
       const newJob = await createJob({ companyId, title, description });
