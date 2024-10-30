@@ -1,19 +1,8 @@
 import { ApolloClient, InMemoryCache, gql, ApolloLink, concat } from "@apollo/client";
-import { GraphQLClient } from "graphql-request";
 import { getAccessToken } from "../auth";
 import { HttpLink } from "@apollo/client";
 
 const endpoint = "http://localhost:9000/graphql";
-const options = {
-  headers: () => {
-    const accessToken = getAccessToken();
-    if (accessToken) {
-      return { Authorization: `Bearer ${accessToken}` };
-    }
-    return {};
-  },
-};
-const client = new GraphQLClient(endpoint, options);
 
 const httpLink = new HttpLink({ uri: endpoint });
 
@@ -160,8 +149,18 @@ export const deleteJobById = async (jobId) => {
     }
   `;
 
-  const res = await client.request(mutation, { jobId });
-  return res.deleteJobById;
+  try {
+    const {
+      data: { deleteJobById },
+    } = await apolloClient.mutate({
+      mutation,
+      variables: { jobId },
+    });
+
+    return deleteJobById;
+  } catch (e) {
+    console.log("deleteJobById", e);
+  }
 };
 
 export const updateJobById = async ({ id, title, description }) => {
@@ -175,12 +174,22 @@ export const updateJobById = async ({ id, title, description }) => {
     }
   `;
 
-  const res = await client.request(mutation, {
-    input: {
-      id,
-      title,
-      description,
-    },
-  });
-  return res;
+  try {
+    const {
+      data: { updateJobById },
+    } = await apolloClient.mutate({
+      mutation,
+      variables: {
+        input: {
+          id,
+          title,
+          description,
+        },
+      },
+    });
+
+    return updateJobById;
+  } catch (e) {
+    console.log("updateJobById", e);
+  }
 };

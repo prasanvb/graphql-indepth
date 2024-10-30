@@ -4,6 +4,7 @@ import { createJob, updateJobById } from "../lib/graphql/queries";
 
 function CreateJobPage() {
   const navigate = useNavigate();
+  // used for passing values from one route to other
   const { state } = useLocation();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -20,8 +21,8 @@ function CreateJobPage() {
     if (state?.updateAction) {
       const { id } = state;
       try {
-        const res = await updateJobById({ id, title, description });
-        res && navigate(`/jobs/${id}`);
+        const updatedJob = await updateJobById({ id, title, description });
+        updatedJob && navigate(`/jobs/${id}`);
       } catch (e) {
         console.log(e);
       }
