@@ -27,9 +27,8 @@ function CreateJobPage() {
       }
     } else {
       try {
-        const {
-          createJob: { id },
-        } = await createJob({ title, description });
+        const newJob = await createJob({ title, description });
+        const { id } = newJob;
         id && navigate(`/jobs/${id}`);
       } catch (e) {
         console.log(e);

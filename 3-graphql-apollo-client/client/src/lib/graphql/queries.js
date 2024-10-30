@@ -1,5 +1,7 @@
-import { gql, GraphQLClient } from "graphql-request";
+import { ApolloClient, InMemoryCache, gql, ApolloLink, concat } from "@apollo/client";
+import { GraphQLClient } from "graphql-request";
 import { getAccessToken } from "../auth";
+import { HttpLink } from "@apollo/client";
 
 const endpoint = "http://localhost:9000/graphql";
 const options = {
@@ -12,6 +14,27 @@ const options = {
   },
 };
 const client = new GraphQLClient(endpoint, options);
+
+const httpLink = new HttpLink({ uri: endpoint });
+
+const authMiddleware = new ApolloLink((operation, forward) => {
+  // add the authorization to the headers
+  const token = getAccessToken();
+  operation.setContext({
+    headers: {
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  });
+
+  return forward(operation);
+});
+
+// NOTE: Configured using Apollo Links
+// Apollo Client response contains `loading`, `error`, and `data` properties
+const apolloClient = new ApolloClient({
+  link: concat(authMiddleware, httpLink),
+  cache: new InMemoryCache(),
+});
 
 export const getJobs = async () => {
   const query = gql`
@@ -30,8 +53,16 @@ export const getJobs = async () => {
     }
   `;
 
-  const res = await client.request(query);
-  return res.fetchJobs;
+  // NOTE: Apollo client response `data` contains resolver name and response returned by the resolver
+  try {
+    const {
+      data: { fetchJobs },
+    } = await apolloClient.query({ query });
+
+    return fetchJobs;
+  } catch (e) {
+    console.log("fetchJobs", e);
+  }
 };
 
 export const getJobById = async (jobId) => {
@@ -50,8 +81,15 @@ export const getJobById = async (jobId) => {
     }
   `;
 
-  const res = await client.request(query, { jobId });
-  return res.fetchJob;
+  try {
+    const {
+      data: { fetchJob },
+    } = await apolloClient.query({ query, variables: { jobId } });
+
+    return fetchJob;
+  } catch (e) {
+    console.log("getJobById", e);
+  }
 };
 
 export const getCompanyById = async (companyId) => {
@@ -70,8 +108,15 @@ export const getCompanyById = async (companyId) => {
     }
   `;
 
-  const res = await client.request(query, { companyId });
-  return res.fetchCompany;
+  try {
+    const {
+      data: { fetchCompany },
+    } = await apolloClient.query({ query, variables: { companyId } });
+
+    return fetchCompany;
+  } catch (e) {
+    console.log("getCompanyById", e);
+  }
 };
 
 export const createJob = async ({ title, description }) => {
@@ -85,13 +130,23 @@ export const createJob = async ({ title, description }) => {
     }
   `;
 
-  const res = await client.request(mutation, {
-    jobInput: {
-      title,
-      description,
-    },
-  });
-  return res;
+  try {
+    const {
+      data: { createJob },
+    } = await apolloClient.mutate({
+      mutation,
+      variables: {
+        jobInput: {
+          title,
+          description,
+        },
+      },
+    });
+
+    return createJob;
+  } catch (e) {
+    console.log("getCompanyById", e);
+  }
 };
 
 export const deleteJobById = async (jobId) => {

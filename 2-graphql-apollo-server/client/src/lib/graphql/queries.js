@@ -30,6 +30,7 @@ export const getJobs = async () => {
     }
   `;
 
+  // NOTE: promise response contains resolver name and response returned by the resolver
   const res = await client.request(query);
   return res.fetchJobs;
 };

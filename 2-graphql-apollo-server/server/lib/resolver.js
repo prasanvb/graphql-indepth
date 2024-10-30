@@ -65,8 +65,8 @@ export const resolvers = {
         throw unauthorizedError('User not authorized');
       }
 
-      const user = await getUser(auth.sub);
-      const companyId = user.companyId;
+      const user = auth && (await getUser(auth?.sub));
+      const companyId = user && user?.companyId;
 
       // NOTE: createJob function requires object as an input parameter
       const newJob = await createJob({ companyId, title, description });

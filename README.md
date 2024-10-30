@@ -99,5 +99,13 @@
 - Queries and Mutations: These are the read and write operations of GraphQL.
 - Caching overview: Apollo Client's normalized cache enables you to skip network requests entirely when data is already available locally.
 - Managing local state: Apollo Client provides APIs for managing both remote and local data, enabling you to consolidate all of your application's state.
-- Advanced HTTP networking: Send custom headers and other authentication metadata in your queries.
-  - The Apollo Link library provides detailed control over HTTP requests in Apollo Client, allowing users to customize the networking layer with options like WebSocket transport or mocked server data. It organizes network behavior through a sequence of link objects, with the default being HttpLink for sending GraphQL queries over HTTP. Apollo Link also offers pre-built links for various use cases and supports the creation of custom links.
+- Basic HTTP networking: Send custom headers and other authentication metadata in your queries.
+- Advanced HTTP networking using Apollo link
+- Graphql Abstract Syntax Tree (AST) represents a GraphQL document in a type-safe, machine-readable format
+- The `gql` template literal graphql-tag is used to write GraphQL queries in a concise format that gets parsed into a standard GraphQL AST. It’s the recommended way to pass queries to Apollo Client, but it produces a generic AST usable with any GraphQL client.
+- Apollo Client response contains `loading`, `error`, and `data` properties you can use to render your UI.
+
+#### Apollo Link
+
+- The Apollo Link library provides detailed control over HTTP requests in Apollo Client, allowing users to customize the networking layer with options like WebSocket transport or mocked server data. It organizes network behavior through a sequence of link objects, with the default being HttpLink for sending GraphQL queries over HTTP. Apollo Link also offers pre-built links for various use cases and supports the creation of custom links.
+- Apollo Link includes many links for specialized use cases, such as the WebSocketLink for communicating over WebSocket and the BatchHttpLink for combining multiple GraphQL operations in a single HTTP request.
