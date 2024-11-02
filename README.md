@@ -1,16 +1,5 @@
 # GRAPHQL IN-DEPTH
 
-## JWT Authentication
-
-- [Authentication flow diagram](2-graphql-apollo-server/client/public/authentication.png)
-- Bearer token is storied in the browser side local storage
-- `express-jwt` module provides Express middleware for validating JWTs and the decoded JWT payload is available on the `request` object. The decoded JWT payload is available on the request via the `auth` property.
-- Why there's a separate `/login` endpoint for authentication.
-  - Protocol Independence: GraphQL can be used with various protocols (HTTP, WebSockets, etc.), and authentication should be handled at the protocol level to maintain flexibility.
-  - Simplicity: Keeping authentication separate from GraphQL operations simplifies the API and avoids the need to include the token in every request.
-  - Best Practices: Well-known GraphQL APIs like GitHub and Shopify follow this approach, demonstrating its effectiveness.
-  - By separating authentication, the GraphQL API remains focused on data querying and mutation, while the underlying protocol handles the secure exchange of information.
-
 ## Graphql
 
 - Approaches
@@ -45,6 +34,10 @@
   - `args` - Argument is an object that contains all inputs args that were provided for the field by the GraphQL operation
   - `contextValue` - An object shared across all resolvers that are executing for a particular operation. Use this to share per-operation state, including authentication information, dataloader instances, and anything else to track across resolvers.
   - `info` - Contains information about the operation's execution state, including the field name, the path to the field from the root, and more.
+
+- Graphql `input` types are used to define the structure of data that can be passed as arguments to fields, particularly in mutations.
+
+- [Graphql error handling and custom errors](2-graphql-apollo-server/server/lib/resolver.js)
 
 - GraphQL allows for recursive queries, enabling you to fetch data with arbitrary levels of nesting. This is particularly useful for hierarchical data, such as company-job relationships.
 
@@ -84,9 +77,16 @@
   }
   ```
 
-- [Graphql error handling and custom errors](2-graphql-apollo-server/server/lib/resolver.js)
+## JWT Authentication
 
-- Graphql `input` types are used to define the structure of data that can be passed as arguments to fields, particularly in mutations.
+- [Authentication flow diagram](2-graphql-apollo-server/client/public/authentication.png)
+- Bearer token is storied in the browser side local storage
+- `express-jwt` module provides Express middleware for validating JWTs and the decoded JWT payload is available on the `request` object. The decoded JWT payload is available on the request via the `auth` property.
+- Why there's a separate `/login` endpoint for authentication.
+  - Protocol Independence: GraphQL can be used with various protocols (HTTP, WebSockets, etc.), and authentication should be handled at the protocol level to maintain flexibility.
+  - Simplicity: Keeping authentication separate from GraphQL operations simplifies the API and avoids the need to include the token in every request.
+  - Best Practices: Well-known GraphQL APIs like GitHub and Shopify follow this approach, demonstrating its effectiveness.
+  - By separating authentication, the GraphQL API remains focused on data querying and mutation, while the underlying protocol handles the secure exchange of information.
 
 ## Apollo
 
