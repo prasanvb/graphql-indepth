@@ -15,6 +15,7 @@ const authMiddleware = new ApolloLink((operation, forward) => {
     },
   });
 
+  // NOTE: `forward` similar to `next` in the express middleware
   return forward(operation);
 });
 

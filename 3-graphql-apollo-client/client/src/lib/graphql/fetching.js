@@ -23,7 +23,12 @@ export const getJobs = async () => {
   try {
     const {
       data: { fetchJobs },
-    } = await apolloClient.query({ query });
+    } = await apolloClient.query({
+      query,
+      fetchPolicy: "network-only", // NOTE: Used for first execution
+      nextFetchPolicy: "cache-first", // NOTE: Used for subsequent executions
+      pollInterval: 0,
+    });
 
     return fetchJobs;
   } catch (e) {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
-import { createJob, updateJobById } from "../lib/graphql/queries";
+import { createJob, updateJobById } from "../lib/graphql/fetching";
 
 function CreateJobPage() {
   const navigate = useNavigate();

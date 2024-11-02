@@ -104,6 +104,10 @@
 - Graphql Abstract Syntax Tree (AST) represents a GraphQL document in a type-safe, machine-readable format
 - The `gql` template literal graphql-tag is used to write GraphQL queries in a concise format that gets parsed into a standard GraphQL AST. It’s the recommended way to pass queries to Apollo Client, but it produces a generic AST usable with any GraphQL client.
 - Apollo Client response contains `loading`, `error`, and `data` properties you can use to render your UI.
+- Setting a fetch policy for the queries, can be set at apolloClient level or at individual query level. Example:
+  - `fetchPolicy: "network-only"` - Used for first execution
+  - `nextFetchPolicy: "cache-first"` - Used for subsequent executions
+  - `pollInterval: 1000`
 
 #### Apollo Link
 
