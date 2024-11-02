@@ -108,6 +108,8 @@
   - `fetchPolicy: "network-only"` - Used for first execution
   - `nextFetchPolicy: "cache-first"` - Used for subsequent executions
   - `pollInterval: 1000`
+- Use the `update` function at the individual mutation level to directly modify the cache (i.e., write to the query cache) based on the mutation response, reducing the need for additional network calls. (Example: [createJob](3-graphql-apollo-client/client/src/graphql/fetching.js))
+- Fragments allow you to define reusable parts of a query and are defined on the graphql type
 
 #### Apollo Link
 
