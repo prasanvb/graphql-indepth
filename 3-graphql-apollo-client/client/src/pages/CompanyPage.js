@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { getCompanyById } from "../lib/graphql/fetching";
+import { getCompanyById } from "../graphql/fetching";
 import JobList from "../components/JobList.js";
 
 function CompanyPage() {

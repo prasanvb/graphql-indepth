@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { formatDate } from "../lib/formatters";
-import { getJobById, deleteJobById } from "../lib/graphql/fetching";
+import { getJobById, deleteJobById } from "../graphql/fetching";
 import { useNavigate } from "react-router";
 
 function JobPage() {

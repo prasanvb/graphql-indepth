@@ -1,5 +1,5 @@
 import { ApolloClient, InMemoryCache, ApolloLink, concat } from "@apollo/client";
-import { getAccessToken } from "../auth";
+import { getAccessToken } from "../lib/auth";
 import { HttpLink } from "@apollo/client";
 
 const endpoint = "http://localhost:9000/graphql";
