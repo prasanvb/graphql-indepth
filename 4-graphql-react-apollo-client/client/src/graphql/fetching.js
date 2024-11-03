@@ -39,33 +39,6 @@ export const createJob = async ({ title, description }) => {
   }
 };
 
-export const getCompanyById = async (companyId) => {
-  const query = gql`
-    query companyById($companyId: ID!) {
-      fetchCompany(id: $companyId) {
-        id
-        name
-        description
-        jobs {
-          id
-          date
-          title
-        }
-      }
-    }
-  `;
-
-  try {
-    const {
-      data: { fetchCompany },
-    } = await apolloClient.query({ query, variables: { companyId } });
-
-    return fetchCompany;
-  } catch (e) {
-    console.log("getCompanyById", e);
-  }
-};
-
 export const deleteJobById = async (jobId) => {
   const mutation = gql`
     mutation deleteJon($jobId: ID!) {

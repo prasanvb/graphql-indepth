@@ -35,3 +35,18 @@ export const getJobById = gql`
   }
   ${jobDetailsFragment}
 `;
+
+export const getCompanyById = gql`
+  query companyById($companyId: ID!) {
+    fetchCompany(id: $companyId) {
+      id
+      name
+      description
+      jobs {
+        id
+        date
+        title
+      }
+    }
+  }
+`;
