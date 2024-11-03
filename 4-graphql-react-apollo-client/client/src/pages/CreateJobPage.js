@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
-import { createJob, updateJobById } from "../graphql/fetching";
+import { updateJobById } from "../graphql/fetching";
+import { createJob, getJobById } from "../graphql/qureies";
+import { useMutation } from "@apollo/client";
 
 function CreateJobPage() {
   const navigate = useNavigate();
   // used for passing values from one route to other
   const { state } = useLocation();
+  const [mutate, result] = useMutation(createJob);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const isEdit = state?.updateAction;
+
+  console.log({ result });
 
   useEffect(() => {
     if (state) {
@@ -18,7 +24,7 @@ function CreateJobPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (state?.updateAction) {
+    if (isEdit) {
       const { id } = state;
       try {
         const updatedJob = await updateJobById({ id, title, description });
@@ -28,8 +34,24 @@ function CreateJobPage() {
       }
     } else {
       try {
-        const newJob = await createJob({ title, description });
-        const { id } = newJob;
+        const { data } = await mutate({
+          variables: {
+            jobInput: {
+              title,
+              description,
+            },
+          },
+          update: (cache, { data }) => {
+            cache.writeQuery({
+              query: getJobById,
+              variables: { jobId: data.createJob.id },
+              data: { fetchJob: data.createJob },
+            });
+          },
+        });
+        const {
+          createJob: { id },
+        } = data;
         id && navigate(`/jobs/${id}`);
       } catch (e) {
         console.log(e);

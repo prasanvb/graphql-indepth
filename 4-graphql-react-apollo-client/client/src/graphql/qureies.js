@@ -50,3 +50,32 @@ export const getCompanyById = gql`
     }
   }
 `;
+
+export const createJob = gql`
+  mutation createNewJob($jobInput: CreateJobInput!) {
+    createJob(jobInput: $jobInput) {
+      ...JobDetail
+    }
+  }
+  ${jobDetailsFragment}
+`;
+
+export const deleteJobId = gql`
+  mutation deleteJon($jobId: ID!) {
+    deleteJobById(id: $jobId) {
+      id
+      title
+      description
+    }
+  }
+`;
+
+export const updateJobById = gql`
+  mutation updateJob($input: UpdateJobInput!) {
+    updateJobById(input: $input) {
+      id
+      title
+      description
+    }
+  }
+`;

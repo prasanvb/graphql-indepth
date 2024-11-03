@@ -24,7 +24,4 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 export const apolloClient = new ApolloClient({
   link: concat(authMiddleware, httpLink),
   cache: new InMemoryCache(),
-  fetchPolicy: "network-only", // NOTE: Used for first execution
-  nextFetchPolicy: "cache-first", // NOTE: Used for subsequent executions
-  // pollInterval: 0,
 });

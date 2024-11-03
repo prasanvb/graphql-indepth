@@ -1,18 +1,16 @@
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { formatDate } from "../lib/formatters";
-import { deleteJobById } from "../graphql/fetching";
 import { useNavigate } from "react-router";
-import { useQuery } from "@apollo/client";
-import { getJobById } from "../graphql/qureies";
+import { useQuery, useMutation } from "@apollo/client";
+import { getJobById, deleteJobId } from "../graphql/qureies";
 
 function JobPage() {
   const navigate = useNavigate();
   // NOTE: getting jobID from url query parameter
   const { jobId } = useParams();
-
   const { loading, error, data } = useQuery(getJobById, { variables: { jobId } });
-  console.log({ loading, error, data });
+  const [mutate] = useMutation(deleteJobId);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -28,8 +26,9 @@ function JobPage() {
   const handleDelete = async (event) => {
     event.preventDefault();
     try {
-      const res = await deleteJobById(job.id);
-      res && navigate("/");
+      const { data } = await mutate({ variables: { jobId } });
+
+      data && navigate("/");
     } catch (e) {
       console.log(e);
     }
