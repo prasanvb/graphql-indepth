@@ -3,7 +3,10 @@ import { useQuery } from "@apollo/client";
 import { getJobs } from "../graphql/qureies";
 
 function HomePage() {
-  const { loading, error, data } = useQuery(getJobs);
+  const { loading, error, data } = useQuery(getJobs, {
+    fetchPolicy: "network-only", // NOTE: Used for first execution
+    nextFetchPolicy: "cache-first", // NOTE: Used for subsequent executions
+  });
 
   if (loading) {
     return <div>Loading...</div>;
