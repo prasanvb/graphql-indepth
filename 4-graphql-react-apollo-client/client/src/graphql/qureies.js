@@ -1,5 +1,19 @@
 import { gql } from "@apollo/client";
 
+export const getJobs = gql`
+  query Jobs {
+    fetchJobs {
+      id
+      title
+      date
+      company {
+        id
+        name
+      }
+    }
+  }
+`;
+
 export const jobDetailsFragment = gql`
   fragment JobDetail on Job {
     id

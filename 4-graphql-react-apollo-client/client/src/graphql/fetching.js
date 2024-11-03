@@ -3,38 +3,6 @@ import { getJobByIdQuery, jobDetailsFragment } from "./qureies";
 
 import { apolloClient } from "./client";
 
-export const getJobs = async () => {
-  const query = gql`
-    query Jobs {
-      fetchJobs {
-        id
-        title
-        date
-        company {
-          id
-          name
-        }
-      }
-    }
-  `;
-
-  // NOTE: Apollo client response `data` contains resolver name and response returned by the resolver
-  try {
-    const {
-      data: { fetchJobs },
-    } = await apolloClient.query({
-      query,
-      fetchPolicy: "network-only", // NOTE: Used for first execution
-      nextFetchPolicy: "cache-first", // NOTE: Used for subsequent executions
-      pollInterval: 0,
-    });
-
-    return fetchJobs;
-  } catch (e) {
-    console.log("fetchJobs", e);
-  }
-};
-
 export const getJobById = async (jobId) => {
   try {
     const {

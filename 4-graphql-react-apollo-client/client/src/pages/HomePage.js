@@ -1,18 +1,24 @@
-import { useEffect, useState } from "react";
 import JobList from "../components/JobList";
-import { getJobs } from "../graphql/fetching";
+import { useQuery } from "@apollo/client";
+import { getJobs } from "../graphql/qureies";
 
 function HomePage() {
-  const [jobs, setJobs] = useState([]);
+  const { loading, error, data } = useQuery(getJobs);
 
-  useEffect(() => {
-    getJobs().then((jobs) => setJobs(jobs));
-  }, []);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="has-text-danger">Error. Data Unavailable. </div>;
+  }
+
+  const { fetchJobs } = data;
 
   return (
     <div>
       <h1 className="title">Job Board</h1>
-      {jobs.length && <JobList jobs={jobs} />}
+      {fetchJobs?.length && <JobList jobs={fetchJobs} />}
     </div>
   );
 }
