@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
-import { createJob, getJobById, updateJobById } from "../graphql/qureies";
+import { createJob, getJobById, updateJobById, getJobs } from "../graphql/qureies";
 import { useMutation } from "@apollo/client";
 
 function CreateJobPage() {
@@ -8,8 +8,12 @@ function CreateJobPage() {
   // used for passing values from one route to other
   const { state } = useLocation();
   const isEdit = state?.updateAction;
-  const [mutateCreateJob, createJobResult] = useMutation(createJob);
-  const [mutateUpdateJob, updateJobResult] = useMutation(updateJobById);
+  const [mutateCreateJob, createJobResult] = useMutation(createJob, {
+    refetchQueries: [getJobs],
+  });
+  const [mutateUpdateJob, updateJobResult] = useMutation(updateJobById, {
+    refetchQueries: [getJobs],
+  });
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -90,7 +94,11 @@ function CreateJobPage() {
           </div>
           <div className="field">
             <div className="control">
-              <button className="button is-link" onClick={handleSubmit}>
+              <button
+                className="button is-link"
+                onClick={handleSubmit}
+                disabled={createJobResult.loading || updateJobResult.loading}
+              >
                 Submit
               </button>
             </div>

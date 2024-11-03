@@ -110,6 +110,12 @@
   - `pollInterval: 1000`
 - Use the `update` function at the individual mutation level to directly modify the cache (i.e., write to the query cache) based on the mutation response, reducing the need for additional network calls. (Example: [createJob](3-graphql-apollo-client/client/src/graphql/fetching.js))
 - Fragments allow you to define reusable parts of a query and are defined on the graphql type
+- `useQuery` react hook returns an object from Apollo Client that contains `loading`, `error`, and `data` properties you can use to render your UI
+- `useMutation` returns a tuple that includes `[mutateFunction, { data, loading, error }]`
+  - `refetchQueries` property with in the useMutation to reflect new changes in the associated query
+- After a mutation has completed you can refresh the relevant pages either by using
+  - `update` cache function to write the query directly
+  - `refetchQueries` to refetch specific queries
 
 #### Apollo Link
 
