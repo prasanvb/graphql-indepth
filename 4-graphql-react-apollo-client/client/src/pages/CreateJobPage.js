@@ -1,19 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
-import { updateJobById } from "../graphql/fetching";
-import { createJob, getJobById } from "../graphql/qureies";
+import { createJob, getJobById, updateJobById } from "../graphql/qureies";
 import { useMutation } from "@apollo/client";
 
 function CreateJobPage() {
   const navigate = useNavigate();
   // used for passing values from one route to other
   const { state } = useLocation();
-  const [mutate, result] = useMutation(createJob);
+  const isEdit = state?.updateAction;
+  const [mutateCreateJob, createJobResult] = useMutation(createJob);
+  const [mutateUpdateJob, updateJobResult] = useMutation(updateJobById);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const isEdit = state?.updateAction;
-
-  console.log({ result });
 
   useEffect(() => {
     if (state) {
@@ -27,14 +25,23 @@ function CreateJobPage() {
     if (isEdit) {
       const { id } = state;
       try {
-        const updatedJob = await updateJobById({ id, title, description });
-        updatedJob && navigate(`/jobs/${id}`);
+        const { data } = await mutateUpdateJob({
+          variables: {
+            input: {
+              id,
+              title,
+              description,
+            },
+          },
+        });
+        const { updateJobById } = data;
+        updateJobById && navigate(`/jobs/${id}`);
       } catch (e) {
         console.log(e);
       }
     } else {
       try {
-        const { data } = await mutate({
+        const { data } = await mutateCreateJob({
           variables: {
             jobInput: {
               title,
