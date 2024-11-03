@@ -10,7 +10,7 @@ function HomePage() {
   }
 
   if (error) {
-    return <div className="has-text-danger">Error. Data Unavailable. </div>;
+    return <div className="has-text-danger">Error on trying to fetch data, try again later.</div>;
   }
 
   const { fetchJobs } = data;

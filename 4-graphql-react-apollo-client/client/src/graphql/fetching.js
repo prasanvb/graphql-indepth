@@ -1,19 +1,7 @@
 import { gql } from "@apollo/client";
-import { getJobByIdQuery, jobDetailsFragment } from "./qureies";
+import { getJobById, jobDetailsFragment } from "./qureies";
 
 import { apolloClient } from "./client";
-
-export const getJobById = async (jobId) => {
-  try {
-    const {
-      data: { fetchJob },
-    } = await apolloClient.query({ query: getJobByIdQuery, variables: { jobId } });
-
-    return fetchJob;
-  } catch (e) {
-    console.log("getJobById", e);
-  }
-};
 
 export const createJob = async ({ title, description }) => {
   const mutation = gql`
@@ -38,7 +26,7 @@ export const createJob = async ({ title, description }) => {
       },
       update: (cache, { data }) => {
         cache.writeQuery({
-          query: getJobByIdQuery,
+          query: getJobById,
           variables: { jobId: data.createJob.id },
           data: { fetchJob: data.createJob },
         });

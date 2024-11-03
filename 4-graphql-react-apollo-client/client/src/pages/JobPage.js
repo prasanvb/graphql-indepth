@@ -1,40 +1,29 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { formatDate } from "../lib/formatters";
-import { getJobById, deleteJobById } from "../graphql/fetching";
+import { deleteJobById } from "../graphql/fetching";
 import { useNavigate } from "react-router";
+import { useQuery } from "@apollo/client";
+import { getJobById } from "../graphql/qureies";
 
 function JobPage() {
   const navigate = useNavigate();
   // NOTE: getting jobID from url query parameter
   const { jobId } = useParams();
-  const [componentState, setComponentState] = useState({
-    isLoading: true,
-    job: null,
-    isError: false,
-  });
-  const { isLoading, job, isError } = componentState;
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const job = await getJobById(jobId);
-        setComponentState({ job, isLoading: false, isError: false });
-      } catch (err) {
-        console.error("error: ", JSON.stringify(err, null, 2));
-        setComponentState({ job: null, isLoading: false, isError: true });
-      }
-    })();
-  }, [jobId]);
+  const { loading, error, data } = useQuery(getJobById, { variables: { jobId } });
+  console.log({ loading, error, data });
 
-  if (isLoading) {
-    return <p>Loading...</p>;
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
-  if (isError) {
-    return <p>Error on trying to fetch company data, try again later</p>;
+  if (error) {
+    return <div className="has-text-danger">Error on trying to fetch data, try again later.</div>;
   }
+
+  const { fetchJob } = data;
+  const job = fetchJob;
 
   const handleDelete = async (event) => {
     event.preventDefault();

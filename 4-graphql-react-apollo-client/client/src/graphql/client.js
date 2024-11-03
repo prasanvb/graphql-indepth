@@ -26,5 +26,5 @@ export const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
   fetchPolicy: "network-only", // NOTE: Used for first execution
   nextFetchPolicy: "cache-first", // NOTE: Used for subsequent executions
-  pollInterval: 0,
+  // pollInterval: 0,
 });
