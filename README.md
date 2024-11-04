@@ -121,3 +121,9 @@
 
 - The Apollo Link library provides detailed control over HTTP requests in Apollo Client, allowing users to customize the networking layer with options like WebSocket transport or mocked server data. It organizes network behavior through a sequence of link objects, with the default being HttpLink for sending GraphQL queries over HTTP. Apollo Link also offers pre-built links for various use cases and supports the creation of custom links.
 - Apollo Link includes many links for specialized use cases, such as the WebSocketLink for communicating over WebSocket and the BatchHttpLink for combining multiple GraphQL operations in a single HTTP request.
+
+## DataLoader
+
+- DataLoader is a generic utility to be used as part of your application's data fetching layer to provide a simplified and consistent API over various remote data sources such as databases or web services via batching and caching.
+- Create a [DataLoader class example](2-graphql-apollo-server/server/utils/companies.js)
+- Each DataLoader instance represents a unique cache. Typically instances are created per request when used within a web-server like express if different users can see different things.

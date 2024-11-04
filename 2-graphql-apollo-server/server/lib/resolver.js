@@ -45,7 +45,15 @@ export const resolvers = {
   Job: {
     // field value inside the custom resolver takes precedence over getJobs field values
     date: (getJobsResponse) => toISOdate(getJobsResponse.createdAt),
-    company: (getJobsResponse) => getCompany(getJobsResponse.companyId),
+    // NOTE: Without DataLoader
+    // company: (getJobsResponse) => getCompany(getJobsResponse.companyId),
+    // NOTE: With DataLoader: global companyLoader cache
+    // company: (getJobsResponse) => companyLoader.load(getJobsResponse.companyId),
+    // NOTE: With DataLoader: new companyLoader instance created per request and its per request cache
+    company: (getJobsResponse, _args, context) => {
+      console.log({ context });
+      return context.companyLoader.load(getJobsResponse.companyId);
+    },
   },
 
   // Custom resolver for company

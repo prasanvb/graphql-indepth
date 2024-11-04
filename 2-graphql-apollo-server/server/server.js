@@ -5,6 +5,7 @@ import express from 'express';
 import { readFile } from 'node:fs/promises';
 import { authMiddleware, handleLogin } from './lib/auth.js';
 import { resolvers } from './lib/resolver.js';
+import { createCompanyLoaderInstance } from './utils/companies.js';
 
 const PORT = 9000;
 
@@ -17,7 +18,15 @@ const createApp = async () => {
 
   // NOTE: The express-jwt decoded JWT payload is available on the request via the `auth` property.
   const getContext = ({ req }) => {
-    return { auth: req.auth };
+    // 
+    const companyLoader = createCompanyLoaderInstance();
+    const context = { companyLoader };
+
+    if (req.auth) {
+      context.auth = req.auth;
+    }
+
+    return context;
   };
 
   const typeDefs = await readFile('./graphql/schema.graphql', 'utf-8');
