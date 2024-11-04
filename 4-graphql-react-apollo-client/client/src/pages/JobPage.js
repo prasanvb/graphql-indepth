@@ -47,23 +47,17 @@ function JobPage() {
         <h2 className="subtitle is-4">
           <Link to={`/companies/${job.company.id}`}>{job.company.name}</Link>
         </h2>
+        <div className="is-flex is-justify-content-flex-end">
+          <button className="button is-link mx-4" onClick={handleEdit}>
+            Edit
+          </button>
+          <button className="button is-danger mx-4" onClick={handleDelete}>
+            Delete
+          </button>
+        </div>
         <div className="box">
           <div className="block has-text-grey">Posted: {formatDate(job.date, "long")}</div>
           <p className="block">{job.description}</p>
-        </div>
-        <div className="field">
-          <div className="warning">
-            <button className="button is-link" onClick={handleEdit}>
-              Edit
-            </button>
-          </div>
-        </div>
-        <div className="field">
-          <div className="control">
-            <button className="button is-link" onClick={handleDelete}>
-              Delete
-            </button>
-          </div>
         </div>
       </div>
     )

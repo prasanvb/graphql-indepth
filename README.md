@@ -20,12 +20,12 @@
 
 - Graphql Apollo Client implementation
 - Graphql Apollo Client - Apollo link for authentication
-- Graphql Apollo Client caching enabled
+- Graphql Apollo Client caching and fetching policies
 
 ### 4-Graphql-React-Apollo-Client
 
 - Graphql React Apollo Client using `useQuery` and `useMutation` hooks
-- Graphql server side batching and caching using DataLoader
+- Graphql server side batching and caching using `DataLoader`
 - Graphql pagination - client and server implementation
 
 ## Graphql
