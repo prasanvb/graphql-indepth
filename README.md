@@ -1,5 +1,7 @@
 # GRAPHQL IN-DEPTH
 
+- Express apollo server using Schema-First approach
+
 ## Graphql
 
 - Approaches
@@ -127,3 +129,12 @@
 - DataLoader is a generic utility to be used as part of your application's data fetching layer to provide a simplified and consistent API over various remote data sources such as databases or web services via batching and caching.
 - Create a [DataLoader class example](2-graphql-apollo-server/server/utils/companies.js)
 - Each DataLoader instance represents a unique cache. Typically instances are created per request when used within a web-server like express if different users can see different things.
+
+## Pagination
+
+- [Offset based pagination](2-graphql-apollo-server/server/public/pagination.png)
+  - `LIMIT` limits the number fo rows returned.
+  - `OFFSET` skips that many rows before beginning to return rows.
+  - When using `LIMIT`, it is important to use an `ORDER BY` clause that constrains the result rows into a unique order.
+  - If both `OFFSET` and `LIMIT` appear, then `OFFSET` rows are skipped before starting to count the `LIMIT` rows that are returned.
+- Some implementation or DB uses different wording such as `FIRST` instead of `LIMIT` and `SKIP` instead of `OFFSET`.
