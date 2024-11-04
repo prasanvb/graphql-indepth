@@ -7,3 +7,10 @@ export const connection = knex({
   },
   useNullAsDefault: true,
 });
+
+connection.on('query', (data) => {
+  const { sql, bindings } = data;
+  const query = connection.raw(sql, bindings).toQuery();
+
+  console.log('DB connection: ', query);
+});
