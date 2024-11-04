@@ -19,11 +19,7 @@ export const resolvers = {
   Query: {
     // NOTE: fetchJobs has 2 layer resolver functions 1.getJobs() and 2.Job
     // Data returned by getJobs() is used as input inside Job function
-    fetchJobs: (_root, args) => {
-      // NOTE: limit and offset args are used for pagination
-      const { limit, offset } = args;
-      return getJobs(limit, offset);
-    },
+    fetchJobs: () => getJobs(),
     // NOTE: args is object with query parameter value
     fetchJob: async (_root, args) => {
       const job = await getJob(args.id);
