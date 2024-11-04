@@ -2,6 +2,32 @@
 
 - Express apollo server using Schema-First approach
 
+## Projects
+
+### 1-Graphql-basics
+
+- [Apollo Server SDL approach Example](1-graphql-basics/server/server.js)
+- [Apollo Server code first approach Example](1-graphql-basics/server/server-code-first.js)
+- [Graphql request using Fetch API](1-graphql-basics/client/app.js)
+
+### 2-Express-Graphql-Apollo-Server
+
+- Express backend app using Apollo Server Express middleware
+- JWT Authentication using `express-jwt` middleware
+- `graphql-request` minimal GraphQL client supporting Node and browsers for scripts or simple apps
+
+### 3-Graphql-Apollo-Client
+
+- Graphql Apollo Client implementation
+- Graphql Apollo Client - Apollo link for authentication
+- Graphql Apollo Client caching enabled
+
+### 4-Graphql-React-Apollo-Client
+
+- Graphql React Apollo Client using `useQuery` and `useMutation` hooks
+- Graphql server side batching and caching using DataLoader
+- Graphql pagination - client and server implementation
+
 ## Graphql
 
 - Approaches
@@ -91,6 +117,8 @@
   - By separating authentication, the GraphQL API remains focused on data querying and mutation, while the underlying protocol handles the secure exchange of information.
 
 ## Apollo
+
+### Apollo server
 
 - Apollo Server is an open-source, spec-compliant GraphQL server that's compatible with any GraphQL client, including Apollo Client.
 
