@@ -1,0 +1,45 @@
+type Query {
+  # Array elements are not nullable but can be an empty array
+  # NOTE: all top level query objects are always nullable (best practice)
+  # QueryName: return type
+  fetchJobs(limit: Int, offset: Int): [Job!]
+  fetchJob(id: ID): Job!
+  fetchCompany(id: ID): Company
+}
+
+type Mutation {
+  # MutationName: return type
+  createJob(jobInput: CreateJobInput!): Job
+  deleteJobById(id: ID!): Job 
+  updateJobById(input: UpdateJobInput!): Job
+}
+
+# NOTE: special graphql type called input
+input CreateJobInput {
+  title: String!
+  description: String,
+}
+
+input UpdateJobInput {
+  id: ID!
+  title: String!
+  description: String,
+}
+
+type Job {
+  id: ID!,
+  title: String!,
+  # """ """ triple quotes are custom comments that will be added to graphql documentation
+  """ Date in ISO formate """
+  date: String!,
+  description: String,
+  """ Company object association """
+  company: Company!
+}
+
+type Company {
+  id: ID!,
+  name: String,
+  description: String
+  jobs: [Job!]!
+}
