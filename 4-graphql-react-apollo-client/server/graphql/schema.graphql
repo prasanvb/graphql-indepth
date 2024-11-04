@@ -2,7 +2,7 @@ type Query {
   # Array elements are not nullable but can be an empty array
   # NOTE: all top level query objects are always nullable (best practice)
   # QueryName: return type
-  fetchJobs(limit: Int, offset: Int): [Job!]
+  fetchJobs(limit: Int, offset: Int): ItemList
   fetchJob(id: ID): Job!
   fetchCompany(id: ID): Company
 }
@@ -24,6 +24,11 @@ input UpdateJobInput {
   id: ID!
   title: String!
   description: String,
+}
+
+type ItemList {
+  items: [Job!]!
+  totalCount: Int!
 }
 
 type Job {

@@ -26,20 +26,29 @@ function HomePage() {
   }
 
   const { fetchJobs } = data;
+  const totalPage = Math.ceil(fetchJobs?.totalCount / JOBS_PER_PAGE_LIMIT);
 
   return (
     <div>
       <h1 className="title">Job Board</h1>
       <div>
-        <button className="button is-light" onClick={() => setCurrentPage(currentPage - 1)}>
+        <button
+          className="button is-light"
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage(currentPage - 1)}
+        >
           Previous
         </button>
-        <span className="is-size-4 mx-4">{currentPage}</span>
-        <button className="button is-light" onClick={() => setCurrentPage(currentPage + 1)}>
+        <span className="has-text-primary	is-size-4 mx-4">{currentPage}</span>
+        <button
+          className="button is-light"
+          disabled={currentPage === totalPage}
+          onClick={() => setCurrentPage(currentPage + 1)}
+        >
           Next
         </button>
       </div>
-      {fetchJobs?.length && <JobList jobs={fetchJobs} />}
+      <JobList jobs={fetchJobs.items} />
     </div>
   );
 }

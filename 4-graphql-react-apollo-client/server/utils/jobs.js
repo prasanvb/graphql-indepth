@@ -3,6 +3,10 @@ import { generateId } from './ids.js';
 
 const getJobTable = () => connection.table('job');
 
+export async function getJobsCount() {
+  return await getJobTable().first().count('* as count');
+}
+
 export async function getJobs(limit, offset) {
   const query = getJobTable().select().orderBy('createdAt', 'desc');
 

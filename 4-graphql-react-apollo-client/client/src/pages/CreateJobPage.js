@@ -9,10 +9,10 @@ function CreateJobPage() {
   const { state } = useLocation();
   const isEdit = state?.updateAction;
   const [mutateCreateJob, createJobResult] = useMutation(createJob, {
-    refetchQueries: [getJobs],
+    refetchQueries: [getJobs, "getJobs"],
   });
   const [mutateUpdateJob, updateJobResult] = useMutation(updateJobById, {
-    refetchQueries: [getJobs],
+    refetchQueries: [getJobs, "getJobs"],
   });
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -52,11 +52,11 @@ function CreateJobPage() {
               description,
             },
           },
-          update: (cache, { data }) => {
+          update: (cache, result) => {
             cache.writeQuery({
               query: getJobById,
-              variables: { jobId: data.createJob.id },
-              data: { fetchJob: data.createJob },
+              variables: { jobId: result.data.createJob.id },
+              data: { fetchJob: result.data.createJob },
             });
           },
         });
