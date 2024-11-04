@@ -51,7 +51,7 @@ export const resolvers = {
     // company: (getJobsResponse) => companyLoader.load(getJobsResponse.companyId),
     // NOTE: With DataLoader: new companyLoader instance created per request and its per request cache
     company: (getJobsResponse, _args, context) => {
-      console.log({ context });
+      // IMPORTANT: console.log({ context });
       return context.companyLoader.load(getJobsResponse.companyId);
     },
   },
